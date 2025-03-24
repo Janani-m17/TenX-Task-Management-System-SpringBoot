@@ -1,0 +1,237 @@
+/* Base styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Arial ", sans-serif;
+	background-color: #e3dcea;
+}
+
+/* Login container */
+.login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 20px;
+	background-color: #f5f5f5;
+}
+
+.login-card {
+	display: flex;
+	width: 900px;
+	max-width: 100%;
+	background: white;
+	border-radius: 20px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+	overflow: hidden;
+}
+
+/* Left side illustration */
+.login-illustration {
+	flex: 1;
+	position: relative;
+	padding: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+}
+
+.illustration-svg {
+	max-width: 100%;
+	/* Ensure it scales within the container */
+	width: 300px;
+	/* Set a fixed width */
+	height: auto;
+	/* Maintain aspect ratio */
+	display: block;
+	/* Remove extra space */
+	margin: 0 auto;
+	/* Center the SVG */
+}
+
+/* Ensure proper alignment inside the illustration */
+.login-illustration {
+	display: flex;
+	flex-direction: column;
+	/* Stack SVG and bubbles */
+	align-items: center;
+	/* Center content horizontally */
+	justify-content: center;
+	/* Center content vertically */
+}
+
+.wavy-line {
+	position: absolute;
+	top: 50px;
+	right: -90px;
+	width: 100px;
+	height: 40px;
+	background: transparent;
+}
+
+.wavy-line::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	background-color: #000;
+	animation: wave 2s infinite;
+}
+
+@keyframes wave {
+	0%,
+	100% {
+		transform: translateY(0) scaleX(1);
+	}
+
+	50% {
+		transform: translateY(10px) scaleX(0.9);
+	}
+}
+
+/* Feature bubbles */
+.feature-bubbles {
+	position: absolute;
+	bottom: 100px;
+	right: 50px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.feature-bubble {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.document {
+	background-color: rgb(118, 118, 237);
+}
+
+.list {
+	background-color: rgb(118, 118, 237);
+}
+
+.check {
+	background-color: rgb(118, 118, 237);
+}
+
+.icon {
+	font-size: 20px;
+	color: white;
+}
+
+/* Right side form */
+.login-form-container {
+	flex: 1;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.brand-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.brand-logo {
+	width: 60px;
+	/* Adjust the size as needed */
+	height: auto;
+	/* Keep the aspect ratio */
+	border-radius: 50%;
+	/* Optional: Make it circular */
+	object-fit: cover;
+	/* Ensure it fits well */
+}
+
+.brand-name {
+	font-size: 32px;
+	font-weight: bold;
+	color: #333;
+}
+
+/* Form styling */
+.login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+label {
+	font-size: 14px;
+	color: #333;
+}
+
+input {
+	padding: 12px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+input::placeholder {
+	color: #aaa;
+}
+
+.submit-button {
+	background-color: rgb(118, 118, 237);
+	color: #333;
+	border: none;
+	border-radius: 6px;
+	padding: 12px;
+	font-size: 16px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
+	transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+	background-color: rgb(118, 118, 237);
+}
+
+.arrow {
+	font-size: 18px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.login-card {
+		flex-direction: column;
+	}
+
+	.login-illustration {
+		min-height: 200px;
+	}
+
+	.feature-bubbles {
+		position: relative;
+		bottom: 0;
+		right: 0;
+		flex-direction: row;
+		justify-content: center;
+		margin-top: 20px;
+	}
+}
