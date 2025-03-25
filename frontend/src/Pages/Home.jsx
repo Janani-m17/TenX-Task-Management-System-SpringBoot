@@ -1,57 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
-import Tenxlogo from "../assets/Tenx_logo.jpg";
+import Header from "../components/Header";
 
 const Home = () => {
-	const [animate, setAnimate] = useState(true);
 	const [fadeIn, setFadeIn] = useState(false);
-	const navigate = useNavigate(); // Initialize useNavigate
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		setTimeout(() => {
-			setAnimate(false);
-		}, 1000);
-
-		setTimeout(() => {
-			setFadeIn(true);
-		}, 1200);
+		setTimeout(() => setFadeIn(true), 1200);
 	}, []);
 
 	return (
 		<div className='app'>
-			<header className='header'>
-				<div className='container header-container'>
-					<div className='logo-container'>
-						<img
-							src={Tenxlogo}
-							alt='Tenx logo'
-							className='logo'
-						/>
-						<div className={`logo-text ${animate ? "bounce" : ""}`}>
-							<span>T</span>
-							<span>e</span>
-							<span>n</span>
-							<span>X</span>
-						</div>
-					</div>
-
-					<div className='header-actions'>
-						<button className='language-selector'></button>
-						<a
-							onClick={() => navigate("/login")}
-							className='login-link'>
-							Login
-						</a>
-						<a
-							onClick={() => navigate("/signup")}
-							className='signup-link'>
-							SignUp
-						</a>
-					</div>
-				</div>
-			</header>
-
+			<Header />
 			<main className='main-content'>
 				<div className='container'>
 					<section className='hero-section'>
