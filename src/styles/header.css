@@ -1,0 +1,102 @@
+/* Header styles */
+.header {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.logo- {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    left: -140px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.bounce span {
+    display: inline-block;
+    animation: bounce 1s ease-in-out forwards;
+}
+
+@keyframes bounce {
+
+    0%,
+    50%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10px);
+    }
+}
+
+.bounce span:nth-of-type(1) {
+    animation-delay: 0.1s;
+}
+
+.bounce span:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+.bounce span:nth-of-type(3) {
+    animation-delay: 0.3s;
+}
+
+.bounce span:nth-of-type(4) {
+    animation-delay: 0.4s;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.language-selector {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.contact-link,
+.login-link {
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.signup-link {
+    font-size: 20px;
+    background-color: rgb(138, 76, 238);
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 110px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.signup-link:hover {
+    background-color: #a857f5;
+}
