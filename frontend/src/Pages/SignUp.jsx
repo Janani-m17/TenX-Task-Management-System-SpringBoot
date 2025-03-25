@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/login.css"; // Reuse the same CSS as the Login page
+import "../styles/login.css";
 import Illustration from "../assets/login-illustration.svg";
 import Logo from "../assets/Tenx_logo.jpg";
 import Header from "../components/Header";
@@ -10,7 +10,7 @@ const SignUp = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, _setLoading] = useState(false);
-	const navigate = useNavigate(); // Redirect after signup
+	const navigate = useNavigate();
 
 	const handleSubmit = async e => {
 		e.preventDefault();

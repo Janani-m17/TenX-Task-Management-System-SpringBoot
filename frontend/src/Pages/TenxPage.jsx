@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
 import Calendar from "../components/Calendar";
 import MyTasks from "../components/MyTasks";
 import MyCategories from "../components/MyCategories";
@@ -7,6 +7,7 @@ import MyTracking from "../components/MyTracking";
 import TaskFormModal from "../components/TaskFormModal";
 import "../styles/tenxpage.css";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/SideBar";
 
 const TenxPage = () => {
 	const [selectedSection, setSelectedSection] = useState("Dashboard");

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
 import "../styles/profile.css";
+import Sidebar from "./SideBar";
 
 const ProfilePage = () => {
 	const [selectedSection, setSelectedSection] = useState("Profile");

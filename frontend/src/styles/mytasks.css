@@ -1,0 +1,165 @@
+.tasks-page {
+	display: flex;
+	height: 100vh;
+	background-color: #f4f4f4;
+}
+
+.tasks-content {
+	flex-grow: 1;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.tasks-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	gap: 10px;
+}
+
+.search-input {
+	flex-grow: 1;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: white;
+}
+
+.header-actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.new-task-btn {
+	background-color: #ffd700;
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.user-profile {
+	background-color: white;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.tasks-list-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.task-section {
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.task-table {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.task-table-header {
+	display: flex;
+	background-color: #f8f8f8;
+	padding: 10px;
+	font-weight: bold;
+	border-bottom: 1px solid #ddd;
+}
+
+.task-table-header span {
+	flex: 1;
+	text-align: center;
+}
+
+.task-row {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.task-row:last-child {
+	border-bottom: none;
+}
+
+.task-row span {
+	flex: 1;
+	text-align: center;
+}
+
+.task-checkbox {
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+
+.task-title {
+	text-align: left;
+	flex: 3;
+}
+
+/* Completed task styling */
+.task-title.completed {
+	text-decoration: line-through;
+	color: gray;
+}
+
+/* Task Stage Colors */
+.task-stage {
+	text-transform: capitalize;
+	padding: 5px 10px;
+	border-radius: 12px;
+	font-size: 0.8em;
+	text-align: center;
+	background-color: #e0e0e0;
+	color: #555;
+}
+
+.task-stage.in-progress {
+	background-color: #912ee7;
+	color: #0a0a0a;
+}
+
+.task-stage.not-started {
+	background-color: #ba7efa;
+	color: #090909;
+}
+
+/* Task Priority Colors */
+.task-priority.high {
+	color: #ff6b6b;
+	font-weight: bold;
+}
+
+.task-priority.medium {
+	color: #ffa500;
+	font-weight: bold;
+}
+
+.task-priority.low {
+	color: #4caf50;
+	font-weight: bold;
+}

@@ -5,6 +5,7 @@ import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import TenxPage from "./Pages/TenxPage";
 import ProfilePage from "./components/ProfilePage";
+import TasksPage from "./components/MyTasksPage";
 
 const App = () => {
 	return (
@@ -25,6 +26,9 @@ const App = () => {
 				<Route
 					path='/profile'
 					element={<ProfilePage />}></Route>
+				<Route
+					path='/tasks'
+					element={<TasksPage />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);
