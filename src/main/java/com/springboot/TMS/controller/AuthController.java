@@ -9,8 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -26,6 +25,8 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    private static final Set<String> blacklistedTokens = new HashSet<>();
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         Optional<User> existingUser = userService.findByEmail(user.getEmail());
@@ -33,10 +34,10 @@ public class AuthController {
         if (existingUser.isPresent()) {
             return ResponseEntity.status(400).body(Map.of("error", "User already exists!"));
         }
-        userService.registerUser(user.getName(), user.getEmail(), user.getPassword());
-        return ResponseEntity.ok("User registered successfully!");
-    }
 
+        userService.registerUser(user.getName(), user.getEmail(), user.getPassword());
+        return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -50,7 +51,7 @@ public class AuthController {
 
             if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 String token = jwtService.generateToken(user.getEmail());
-                return ResponseEntity.ok(Map.of("token", "Bearer " + token));
+                return ResponseEntity.ok(Map.of("token", "Bearer " + token, "message", "Login successful"));
             } else {
                 System.out.println("Password does not match!");
                 return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
@@ -61,5 +62,20 @@ public class AuthController {
         return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(400).body(Map.of("error", "Invalid token"));
+        }
 
+        String token = authHeader.substring(7); // Remove "Bearer " prefix
+        jwtService.blacklistToken(token);
+
+        return ResponseEntity.ok(Map.of("message", "Logged out successfully!"));
+    }
+
+
+    public static boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
+    }
 }

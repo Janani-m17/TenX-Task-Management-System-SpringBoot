@@ -17,7 +17,7 @@ public class Task {
     private String name;
     private String description;
     @Column(name = "date_of_creation")
-    private LocalDate dateOfCreation;
+    private LocalDate dateOfCreation = LocalDate.now();
     private Date deadline;
     private String priority;
     private String category;

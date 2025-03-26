@@ -42,6 +42,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
+
+        if (jwtService.isTokenBlacklisted(token)) {
+            System.out.println("Rejected blacklisted token: " + token);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token has been revoked. Please log in again.");
+            return;
+        }
+        
         String userEmail = jwtService.extractUsername(token); // Extract email from token
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
