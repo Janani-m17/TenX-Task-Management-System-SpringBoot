@@ -35,7 +35,7 @@ const Login = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token); // ✅ Save JWT token
       alert("Login successful!");
-      navigate("/dashboard"); // ✅ Redirect to Dashboard
+      navigate("/tenxpage"); // ✅ Redirect to Dashboard
 
     } catch (error) {
       console.error("Login error:", error);

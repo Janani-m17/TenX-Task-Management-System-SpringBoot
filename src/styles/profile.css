@@ -1,0 +1,103 @@
+.profile-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.profile-container {
+	width: 100%;
+	max-width: 600px;
+	background-color: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container h2 {
+	margin-bottom: 30px;
+	font-size: 24px;
+}
+
+.profile-section {
+	margin-bottom: 30px;
+}
+
+.profile-section h3 {
+	margin-bottom: 20px;
+	font-size: 18px;
+}
+
+.profile-photo-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profile-photo {
+	width: 200px;
+	height: 200px;
+	border-radius: 10px;
+	object-fit: cover;
+	margin-bottom: 20px;
+}
+
+.upload-photo-btn {
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.photo-upload-info {
+	color: #888;
+	font-size: 12px;
+	text-align: center;
+}
+
+.input-group {
+	margin-bottom: 20px;
+}
+
+.input-group label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.input-group input {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.change-email-btn {
+	background: none;
+	border: none;
+	color: #6a5acd;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.profile-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 15px;
+}
+
+.cancel-btn {
+	background: none;
+	border: 1px solid #ddd;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+.save-changes-btn {
+	background-color: #ffd700;
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	font-weight: bold;
+}

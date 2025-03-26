@@ -3,6 +3,9 @@ import React from "react";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
+import TenxPage from "./Pages/TenxPage";
+import ProfilePage from "./components/ProfilePage";
+import TasksPage from "./components/MyTasksPage";
 
 
 
@@ -19,6 +22,15 @@ const App = () => {
 				<Route
 					path='/signup'
 					element={<SignUp />}></Route>
+				<Route
+					path='/tenxpage'
+					element={<TenxPage />}></Route>
+				<Route
+					path='/profile'
+					element={<ProfilePage />}></Route>
+				<Route
+					path='/tasks'
+					element={<TasksPage />}></Route>
       </Routes>
 		</BrowserRouter>
 	);
