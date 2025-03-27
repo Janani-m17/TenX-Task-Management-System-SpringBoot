@@ -76,7 +76,23 @@
 	/* Ensure components can grow and shrink as needed */
 	flex: 1;
 	min-height: 0;
+	max-height: 420px;
 }
+
+.my-tasks {
+    max-height: 420px; /* Adjust height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    /* padding: 10px; */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 
 /* Custom scrollbar for better aesthetics */
 .main-content::-webkit-scrollbar {
@@ -125,6 +141,16 @@
 /* Calendar.css */
 .calendar-container {
 	width: 100%;
+}
+
+.react-calendar {
+    width: 100%;
+    max-width: 600px;  /* Adjust this to make it larger */
+    font-size: 1.2rem; /* Increase text size */
+}
+
+.react-calendar__tile {
+    padding: 12px; /* Increase spacing between dates */
 }
 
 /* Task List */

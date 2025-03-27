@@ -25,7 +25,9 @@ function Calendar({ onDateSelect }) {
 
 	return (
 		<div className='calendar-container white-bg'>
-			<ReactCalendar onClickDay={handleDateChange} value={selectedDate} />
+			<ReactCalendar 
+			 className="custom-calendar"
+			 onClickDay={handleDateChange} value={selectedDate} />
 		</div>
 	);
 }

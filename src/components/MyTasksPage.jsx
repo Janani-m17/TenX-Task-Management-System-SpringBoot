@@ -5,12 +5,15 @@ import "../styles/mytasks.css";
 import { useNavigate } from "react-router-dom";
 import TaskFormModal from "./TaskFormModal";
 import { MdOutlineDoneOutline } from "react-icons/md";
+import EditTaskModal from "./EditTaskModal";
 
 const TasksPage = () => {
 	const [selectedSection, setSelectedSection] = useState("My tasks");
 	const [completedTasks, setCompletedTasks] = useState([]);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [tasks, setTasks] = useState({ today: [], tomorrow: [], thisWeek: [] });
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+	const [taskToEdit, setTaskToEdit] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -147,8 +150,9 @@ const TasksPage = () => {
 	
 	
 
-	const editTask = (taskId) => {
-		alert(`Edit task ${taskId}`);
+	const editTask = task => {
+		setTaskToEdit(task);
+		setIsEditModalOpen(true);
 	};
 
 	const deleteTask = async (taskId) => {
@@ -201,6 +205,14 @@ const TasksPage = () => {
 				onClose={() => setIsModalOpen(false)} 
 				// fetchTasks={fetchTasks} // Pass fetchTasks function
 			/>
+			{isEditModalOpen && (
+				<EditTaskModal
+					isOpen={isEditModalOpen}
+					onClose={() => setIsEditModalOpen(false)}
+					task={taskToEdit}
+					fetchTasks={fetchTasks} // To refresh after editing
+				/>
+			)}
 		</div>
 	);
 };
@@ -270,7 +282,7 @@ const TaskList = ({ tasks, title, toggleComplete, completedTasks, editTask, dele
 							{/* Actions */}
 							<div className="task-actions">
 								{!task.completionStatus && ( // Only show the edit button if the task is not completed
-									<FaEdit className="edit-icon" onClick={() => editTask(task.taskId || task.id)} />
+									<FaEdit className="edit-icon" onClick={() => editTask(task)} />
 								)}
 								{task.completionStatus && ( // Only show the delete button if the task is completed
 									<MdOutlineDoneOutline />

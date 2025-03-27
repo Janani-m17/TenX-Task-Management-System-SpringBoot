@@ -1,35 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/tenxpage.css";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 
-// Register required chart.js components
 Chart.register(...registerables);
 
 function MyTracking() {
-	// Updated tracking items with dates
-	const trackingItems = [
-		{ label: "Create wireframe", time: "1h 25m 30s", date: "2024-08-05" },
-		{ label: "Slack logo design", time: "30m 18s", date: "2024-08-06" },
-		{ label: "Dashboard design", time: "1h 48m 22s", date: "2024-08-07" },
-		{ label: "Create wireframe", time: "1m 15s", date: "2024-08-05" },
-		{ label: "Mood tracker", time: "15m 5s", date: "2024-08-08" },
-		{ label: "Bug fix", time: "25m 45s", date: "2024-08-06" },
-	];
+	const [taskCountsByDay, setTaskCountsByDay] = useState({});
 
-	// Helper function to get the day of the week (0 = Sunday, 1 = Monday, etc.)
+	// Get the day of the week from a date
 	const getDayOfWeek = (dateString) => {
 		const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		const date = new Date(dateString);
 		return days[date.getDay()];
 	};
 
-	// Count tasks per day of the week
-	const taskCountsByDay = trackingItems.reduce((acc, item) => {
-		const day = getDayOfWeek(item.date);
-		acc[day] = (acc[day] || 0) + 1; // Increment task count
-		return acc;
-	}, {});
+	// Fetch task data from API
+	useEffect(() => {
+		const fetchTasks = async () => {
+			try {
+				const response = await fetch("http://localhost:8080/tasks/last7days", {
+					method: "GET",
+					credentials: "include",
+					headers: {
+						Authorization: `${localStorage.getItem("token")}`,
+						"Content-Type": "application/json",
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error(`Error ${response.status}: ${response.statusText}`);
+				}
+
+				const tasks = await response.json();
+
+				// Process tasks and group by day of the week
+				const taskCounts = tasks.reduce((acc, task) => {
+					if (task.dateOfCreation) {
+						// Extract only the date part
+						const dateOnly = task.dateOfCreation;
+						const day = getDayOfWeek(dateOnly);
+						acc[day] = (acc[day] || 0) + 1;
+					}
+					return acc;
+				}, {});
+
+				setTaskCountsByDay(taskCounts);
+			} catch (error) {
+				console.error("Error fetching tasks:", error);
+			}
+		};
+
+		fetchTasks();
+	}, []);
 
 	// Ensure all days are present (even if 0 tasks)
 	const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -40,7 +63,7 @@ function MyTracking() {
 		labels: daysOfWeek,
 		datasets: [
 			{
-				label: "Tasks Completed",
+				label: "Tasks Created",
 				data: taskData,
 				backgroundColor: "#5a4abf",
 				borderRadius: 5,
@@ -62,7 +85,7 @@ function MyTracking() {
 				beginAtZero: true,
 				title: {
 					display: true,
-					text: "Tasks Completed",
+					text: "Tasks Created",
 				},
 				ticks: {
 					stepSize: 1, // Ensure whole numbers on the y-axis
@@ -80,18 +103,13 @@ function MyTracking() {
 	return (
 		<div className='my-tracking white-bg'>
 			<div className='section-header'>
-				<h3>My Tracking</h3>
+				<h3>Task Traffic</h3>
 			</div>
 
-			{/* Bar Chart: Tasks Completed Per Day */}
+			{/* Bar Chart: Tasks Created Per Day */}
 			<div className='chart-container'>
 				<Bar data={chartData} options={chartOptions} />
 			</div>
-
-			{/* Add Widget */}
-			{/* <div className='add-tracking'>
-				<span>+ Add widget</span>
-			</div> */}
 		</div>
 	);
 }

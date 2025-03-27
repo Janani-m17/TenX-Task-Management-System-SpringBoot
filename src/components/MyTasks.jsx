@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/tenxpage.css";
 import { CheckCircle } from "lucide-react";
+import { VscTasklist } from "react-icons/vsc";
+
 
 const MyTasks = ({ selectedDate }) => {
     const [tasks, setTasks] = useState([]);
@@ -123,7 +125,7 @@ const MyTasks = ({ selectedDate }) => {
     return (
         <div className='my-tasks white-bg'>
             <div className='section-header'>
-                <h3>📋 Tasks for {currentDate}</h3>
+                <h3>Tasks created on {currentDate}</h3>
             </div>
 
             <div className='tasks-list'>
