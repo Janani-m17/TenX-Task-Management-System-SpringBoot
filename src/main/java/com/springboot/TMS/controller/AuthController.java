@@ -74,6 +74,26 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Logged out successfully!"));
     }
 
+    @GetMapping("/user-info")
+    public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(400).body(Map.of("error", "Invalid token"));
+        }
+
+        String token = authHeader.substring(7); // Remove "Bearer " prefix
+        String email = jwtService.extractUsername(token); // Extract email from JWT
+
+        Optional<User> userOptional = userService.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return ResponseEntity.ok(Map.of("name", user.getName(), "email", user.getEmail()));
+        } else {
+            return ResponseEntity.status(404).body(Map.of("error", "User not found"));
+        }
+    }
+
+
 
     public static boolean isTokenBlacklisted(String token) {
         return blacklistedTokens.contains(token);
