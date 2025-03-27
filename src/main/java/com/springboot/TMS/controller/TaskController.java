@@ -235,5 +235,16 @@ public class TaskController {
         return Integer.compare(priorityOrder.indexOf(priority1), priorityOrder.indexOf(priority2));
     }
 
+    @GetMapping("/last7days")
+    public ResponseEntity<List<Task>> getLast7DaysTasks(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskService.getTasksForLast7Days(user);
+        return ResponseEntity.ok(tasks);
+    }
+
     
 }

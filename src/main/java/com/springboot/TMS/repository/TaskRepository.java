@@ -5,7 +5,6 @@ import com.springboot.TMS.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +19,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     List<Task> findByUserAndDateOfCreation(User user, LocalDate dateOfCreation);
 
     Optional<Task> findByNameAndUser(String name, User user);
+
+    List<Task> findByUserAndDateOfCreationAfter(User user, LocalDate date);
+
 }

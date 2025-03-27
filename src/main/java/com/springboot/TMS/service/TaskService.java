@@ -63,4 +63,9 @@ public class TaskService {
     public Optional<Task> getTaskByName(String name, User user) {
         return taskRepository.findByNameAndUser(name, user);
     }
+
+    public List<Task> getTasksForLast7Days(User user) {
+        LocalDate sevenDaysAgo = LocalDate.now().minusDays(6);
+        return taskRepository.findByUserAndDateOfCreationAfter(user, sevenDaysAgo);
+    }
 }
