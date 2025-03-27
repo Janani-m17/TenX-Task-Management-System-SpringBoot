@@ -11,7 +11,9 @@ import Sidebar from "../components/Sidebar";
 const TenxPage = () => {
 	const [selectedSection, setSelectedSection] = useState("Dashboard");
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedDate, setSelectedDate] = useState(null);
 	const navigate = useNavigate();
+	
 
 	return (
 		<div className='app-container'>
@@ -43,11 +45,11 @@ const TenxPage = () => {
 				</div>
 				<div className='dashboard-grid'>
 					<div className='dashboard-left'>
-						<Calendar />
+						<Calendar onDateSelect={setSelectedDate} />
 						<MyCategories />
 					</div>
 					<div className='dashboard-right'>
-						<MyTasks />
+						<MyTasks selectedDate={selectedDate} />
 						<MyTracking />
 					</div>
 				</div>

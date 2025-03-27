@@ -1,88 +1,61 @@
 import React, { useState } from "react";
-// import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import "../styles/profile.css";
-import Sidebar from "./SideBar";
+import { MdEdit } from "react-icons/md";
+
 
 const ProfilePage = () => {
-	const [selectedSection, setSelectedSection] = useState("Profile");
-	const [profilePhoto, setProfilePhoto] = useState("/api/placeholder/200/200");
-	const [fullName, setFullName] = useState("");
-	// const [email, setEmail] = useState("john.deere@gmail.com");
+    const [selectedSection, setSelectedSection] = useState("Profile");
+    const [fullName, setFullName] = useState("Janani");
+    const [isEditing, setIsEditing] = useState(false);
 
-	const handlePhotoUpload = e => {
-		const file = e.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setProfilePhoto(reader.result);
-			};
-			reader.readAsDataURL(file);
-		}
-	};
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
 
-	return (
-		<div className='app-container'>
-			<Sidebar
-				selectedSection={selectedSection}
-				onSectionSelect={setSelectedSection}
-			/>
-			<div className='main-content profile-page'>
-				<div className='profile-container'>
-					<h2>Profile</h2>
+    const handleNameChange = (e) => {
+        setFullName(e.target.value);
+    };
 
-					<div className='profile-section'>
-						<h3>Profile photo</h3>
-						<div className='profile-photo-wrapper'>
-							<img
-								src={profilePhoto}
-								alt='Profile'
-								className='profile-photo'
-							/>
-							<label className='upload-photo-btn'>
-								+ Upload photo
-								<input
-									type='file'
-									accept='.jpg,.jpeg,.gif,.png'
-									style={{ display: "none" }}
-									onChange={handlePhotoUpload}
-								/>
-							</label>
-							<p className='photo-upload-info'>
-								Supported formats: jpg, gif or png. Max file size 500k.
-							</p>
-						</div>
-					</div>
+    const handleBlur = () => {
+        setIsEditing(false);
+    };
 
-					<div className='profile-section'>
-						<h3>Contact</h3>
-						<div className='input-group'>
-							<label>Full name*</label>
-							<input
-								type='text'
-								placeholder='Type your name here'
-								value={fullName}
-								onChange={e => setFullName(e.target.value)}
-							/>
-						</div>
-						<div className='input-group'>
-							<label>Email address</label>
-							{/* <input
-								type='email'
-								value={email}
-								readOnly
-							/> */}
-							<button className='change-email-btn'>Change email address</button>
-						</div>
-					</div>
-
-					<div className='profile-actions'>
-						<button className='cancel-btn'>Cancel</button>
-						<button className='save-changes-btn'>Save changes</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+    return (
+        <div className='app-container'>
+            <Sidebar selectedSection={selectedSection} onSectionSelect={setSelectedSection} />
+            <div className='main-content profile-page'>
+                <div className='profile-container'>
+                    <h2>User Profile</h2>
+                    <div className='profile-section'>
+                        <label><strong>Name:</strong></label>
+                        <div className='name-edit-container'>
+                            {isEditing ? (
+                                <input
+                                    type='text'
+                                    value={fullName}
+                                    onChange={handleNameChange}
+                                    onBlur={handleBlur}
+                                    autoFocus
+                                />
+                            ) : (
+                                <span>{fullName}</span>
+                            )}
+							<MdEdit className='edit-icon' onClick={handleEditClick} />
+                        </div>
+                    </div>
+                    <div className='profile-section'>
+                        <label><strong>Email:</strong></label>
+                        <span>janani@gmail.com</span>
+                    </div>
+                    <div className='profile-section'>
+                        <label><strong>Points:</strong></label>
+                        <span>70</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default ProfilePage;

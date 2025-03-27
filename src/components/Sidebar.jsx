@@ -4,14 +4,15 @@ import "../styles/tenxpage.css";
 import Tenxlogo from "../assets/tenx logo.jpg";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { MdOutlineSettings } from "react-icons/md";
-import { BsBell } from "react-icons/bs";
 import { FaTasks } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import { GiProgression } from "react-icons/gi";
+
 
 const menuItems = [
 	{ icon: <MdDashboard />, label: "Dashboard", path: "/tenxpage" },
 	{ icon: <FaTasks />, label: "My tasks", path: "/tasks" },
-	{ icon: <BsBell />, label: "Notifications", path: "/notifications" },
+	{ icon: <GiProgression />, label: "View Progress", path: "/progress" },
 	{ icon: <MdOutlineSettings />, label: "Settings", path: "/settings" },
 	{ icon: <RiLogoutBoxRLine />, label: "Log out"},
 ];

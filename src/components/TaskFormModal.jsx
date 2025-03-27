@@ -1,42 +1,80 @@
 import React, { useState } from "react";
-import {
-	IoClose,
-	IoCalendar,
-	IoPricetag,
-} from "react-icons/io5";
+import { IoClose, IoCalendar, IoPricetag } from "react-icons/io5";
 import "../styles/modal.css";
 
 const TaskFormModal = ({ isOpen, onClose }) => {
 	const [taskName, setTaskName] = useState("");
 	const [description, setDescription] = useState("");
 	const [priority, setPriority] = useState("");
-	const [tags, setTags] = useState([]);
+	const [category, setCategory] = useState("");
 	const [dueDate, setDueDate] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	if (!isOpen) return null;
 
-	const handleSubmit = async e => {
+	const handlePrioritySelect = value => {
+		setPriority(value === priority ? "" : value);
+	};
+
+	const handleClose = () => {
+		setTaskName("");
+		setDescription("");
+		setPriority("");
+		setCategory("");
+		setDueDate("");
+		setError(null);
+		onClose();
+	};
+
+	const fetchTasks = async () => {
+		try {
+			const response = await fetch("http://localhost:8080/tasks/my", {
+				method: "GET",
+				credentials: "include",
+				headers: {
+					Authorization: `${localStorage.getItem("token")}`,
+					"Content-Type": "application/json",
+				},
+			});
+			if (!response.ok) throw new Error("Failed to fetch tasks");
+
+			const data = await response.json();
+		} catch (error) {
+			console.error("Error fetching tasks:", error);
+		}
+	};
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
-
-		const token = localStorage.getItem("token"); // Get JWT token from localStorage
+	
+		const token = localStorage.getItem("token");
 		if (!token) {
 			setError("User not authenticated. Please log in.");
 			setLoading(false);
 			return;
 		}
-
+	
+		// Validate Due Date
+		const today = new Date().setHours(0, 0, 0, 0); // Get today's date without time
+		const selectedDate = new Date(dueDate).setHours(0, 0, 0, 0); // Get selected date without time
+	
+		if (selectedDate < today) {
+			setError("Please select a valid due date. It cannot be in the past.");
+			setLoading(false);
+			return;
+		}
+	
 		const newTask = {
 			name: taskName,
 			description,
 			priority,
-			category: tags.join(", "), // Convert array to string
+			category,
 			deadline: dueDate,
 		};
-
+	
 		try {
 			const response = await fetch("http://localhost:8080/tasks/create", {
 				method: "POST",
@@ -46,26 +84,33 @@ const TaskFormModal = ({ isOpen, onClose }) => {
 				},
 				body: JSON.stringify(newTask),
 			});
-
+	
 			if (response.ok) {
 				const result = await response.json();
 				console.log("Task Created:", result);
+				fetchTasks();
 				alert("Task created successfully!");
-				onClose(); // Close modal after success
+				handleClose();
 			} else {
 				const errorMsg = await response.text();
 				setError(errorMsg || "Failed to create task");
 			}
 		} catch (error) {
 			setError("Something went wrong. Please try again.");
+			console.error(error);
 		} finally {
 			setLoading(false);
 		}
 	};
+	
 
 	return (
-		<div className='modal-overlay' onClick={onClose}>
-			<div className='modal-content' onClick={e => e.stopPropagation()}>
+		<div
+			className='modal-overlay'
+			onClick={onClose}>
+			<div
+				className='modal-content'
+				onClick={e => e.stopPropagation()}>
 				<form onSubmit={handleSubmit}>
 					{/* Header */}
 					<div className='modal-header'>
@@ -77,7 +122,10 @@ const TaskFormModal = ({ isOpen, onClose }) => {
 							onChange={e => setTaskName(e.target.value)}
 							required
 						/>
-						<IoClose className='close-icon' onClick={onClose} />
+						<IoClose
+							className='close-icon'
+							onClick={handleClose}
+						/>
 					</div>
 
 					{/* Task Options */}
@@ -98,21 +146,45 @@ const TaskFormModal = ({ isOpen, onClose }) => {
 						<div className='option'>
 							<IoPricetag />
 							<span>Priority:</span>
-							<button type='button' onClick={() => setPriority("High")}>High</button>
-							<button type='button' onClick={() => setPriority("Medium")}>Medium</button>
-							<button type='button' onClick={() => setPriority("Low")}>Low</button>
+							<div className='priority-buttons'>
+								{["High", "Medium", "Low"].map(level => (
+									<div
+										key={level}
+										className={`priority-btn ${
+											priority === level ? "selected" : ""
+										}`}
+										onClick={() => handlePrioritySelect(level)}>
+										{level}
+										{priority === level && (
+											<IoClose
+												className='priority-close'
+												onClick={e => {
+													e.stopPropagation(); // Prevent parent div click event
+													setPriority("");
+												}}
+											/>
+										)}
+									</div>
+								))}
+							</div>
 						</div>
 
 						{/* Tags */}
 						<div className='option'>
 							<IoPricetag />
 							<span>Category:</span>
-							<input
-								type='text'
-								placeholder='Add tags (comma-separated)'
-								value={tags.join(", ")}
-								onChange={e => setTags(e.target.value.split(","))}
-							/>
+							<select
+								value={category}
+								onChange={e => setCategory(e.target.value)}
+								required>
+									<option value=''>Select a category</option>
+									<option value='Work'>Work</option>
+									<option value='Personal'>Personal</option>
+									<option value='Shopping'>Health</option>
+									<option value='Fitness'>Fitness</option>
+									<option value='Learning'>Learning</option>
+									<option value='others'>Others</option>
+							</select>
 						</div>
 					</div>
 
@@ -129,7 +201,10 @@ const TaskFormModal = ({ isOpen, onClose }) => {
 
 					{/* Footer */}
 					<div className='modal-footer'>
-						<button type='submit' className='create-btn' disabled={loading}>
+						<button
+							type='submit'
+							className='create-btn'
+							disabled={loading}>
 							{loading ? "Creating..." : "Create Task"}
 						</button>
 					</div>

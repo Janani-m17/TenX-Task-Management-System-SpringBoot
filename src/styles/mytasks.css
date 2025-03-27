@@ -92,6 +92,7 @@
 .task-table-header span {
 	flex: 1;
 	text-align: center;
+	margin-right: 30px;
 }
 
 .task-row {
@@ -127,7 +128,16 @@
 	color: gray;
 }
 
+.task-category.completed {
+	color: gray;
+}
 /* Task Stage Colors */
+.task-stage {
+    max-width: 280px; 
+    padding: 1px 5px; 
+	border-radius: 12px;
+}
+
 .task-stage {
 	text-transform: capitalize;
 	padding: 5px 10px;
@@ -138,9 +148,14 @@
 	color: #555;
 }
 
-.task-stage.in-progress {
+.task-stage {
 	background-color: #912ee7;
 	color: #0a0a0a;
+}
+
+.task-stage.completed {
+	background-color: #e0e0e0;
+	color: #555;
 }
 
 .task-stage.not-started {
@@ -149,17 +164,107 @@
 }
 
 /* Task Priority Colors */
+
+.task-priority {
+    max-width: 180px; 
+    padding: 1px 5px; 
+	border-radius: 12px;
+}
+
+
 .task-priority.high {
+	text-transform: capitalize;
 	color: #ff6b6b;
 	font-weight: bold;
 }
 
+.task-priority.high.completed {
+	text-transform: capitalize;
+	color: #555;
+}
+
 .task-priority.medium {
-	color: #ffa500;
-	font-weight: bold;
+	text-transform: capitalize;
+    color: #ffa500;
+    font-weight: bold;
+}
+
+.task-priority.medium.completed {
+	text-transform: capitalize;
+	color: #555;
 }
 
 .task-priority.low {
+	text-transform: capitalize;
 	color: #4caf50;
 	font-weight: bold;
+}
+
+.task-priority.low.completed {
+	text-transform: capitalize;
+	color: #555;
+}
+
+/* Edit & Delete Icons */
+.task-actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.task-icon {
+	cursor: pointer;
+	font-size: 18px;
+	color: #666;
+	transition: color 0.2s ease-in-out;
+}
+
+.task-icon:hover {
+	color: #ff6b6b;
+}
+
+.task-date {
+    max-width: 180px; 
+    padding: 1px 5px; 
+	border-radius: 12px;
+}
+
+
+.task-date.past {
+    color: #ff4d4d; /* Red for overdue tasks */
+    background-color: #ffe6e6;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.task-date.past.completed {
+	background-color: #e0e0e0;
+	color: #555;
+}
+
+.task-date.today {
+	text-transform: capitalize;
+	padding: 5px 10px;
+    color: #ffa500; /* Orange for today’s tasks */
+    background-color: #fff4e6;
+	border-radius: 10px;
+}
+
+.task-date.today.completed {
+	background-color: #e0e0e0;
+	color: #555;
+}
+
+.task-date.upcoming {
+	text-transform: capitalize;
+	padding: 5px 10px;
+    color: #28a745; /* Green for future tasks */
+    background-color: #e6f9e6;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.task-date.upcoming.completed {
+	background-color: #e0e0e0;
+	color: #555;
 }
