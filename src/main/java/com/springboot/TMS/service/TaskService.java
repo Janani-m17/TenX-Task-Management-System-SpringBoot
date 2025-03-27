@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -67,5 +69,16 @@ public class TaskService {
     public List<Task> getTasksForLast7Days(User user) {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(6);
         return taskRepository.findByUserAndDateOfCreationAfter(user, sevenDaysAgo);
+    }
+
+    public Map<String, Long> getTaskStatistics(User user) {
+        long totalTasks = taskRepository.countByUser(user);
+        long completedTasks = taskRepository.countByUserAndCompletionStatus(user, true);
+
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("totalTasks", totalTasks);
+        stats.put("completedTasks", completedTasks);
+
+        return stats;
     }
 }

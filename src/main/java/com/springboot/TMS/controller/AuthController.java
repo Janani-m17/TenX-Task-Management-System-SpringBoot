@@ -93,6 +93,30 @@ public class AuthController {
         }
     }
 
+    @PutMapping("/updateUser")
+    public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authHeader,
+                                        @RequestBody User updatedUser) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
+        }
+
+        String token = authHeader.substring(7);
+        String userEmail = jwtService.extractUsername(token);
+
+        Optional<User> existingUserOpt = userService.findByEmail(userEmail);
+        if (existingUserOpt.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("error", "User not found"));
+        }
+
+        User existingUser = existingUserOpt.get();
+        existingUser.setName(updatedUser.getName());
+        existingUser.setEmail(updatedUser.getEmail());
+
+        userService.save(existingUser);
+
+        return ResponseEntity.ok(Map.of("message", "User updated successfully"));
+    }
+
 
 
     public static boolean isTokenBlacklisted(String token) {

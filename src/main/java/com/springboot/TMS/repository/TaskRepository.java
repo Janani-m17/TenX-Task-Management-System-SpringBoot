@@ -22,4 +22,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     List<Task> findByUserAndDateOfCreationAfter(User user, LocalDate date);
 
+    long countByUser(User user);
+
+    long countByUserAndCompletionStatus(User user, boolean completionStatus);
+
 }

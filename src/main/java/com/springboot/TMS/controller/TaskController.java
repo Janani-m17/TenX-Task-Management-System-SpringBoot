@@ -246,5 +246,16 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Long>> getTaskStatistics(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        Map<String, Long> stats = taskService.getTaskStatistics(user);
+
+        return ResponseEntity.ok(stats);
+    }
     
 }
