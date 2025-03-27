@@ -229,6 +229,29 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/sorted/priority-due-date")
+    public ResponseEntity<List<Task>> getTasksSortedByPriorityAndDueDate(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskService.getTasksByUser(user);
+
+        // Sorting first by priority, then by due date
+        tasks.sort((task1, task2) -> {
+            int priorityComparison = comparePriority(task1.getPriority(), task2.getPriority());
+            if (priorityComparison == 0) {
+                return task1.getDeadline().compareTo(task2.getDeadline()); // Sort by due date if priority is the same
+            }
+            return priorityComparison;
+        });
+
+        return ResponseEntity.ok(tasks);
+    }
+
     // Helper method to compare priority
     private int comparePriority(String priority1, String priority2) {
         List<String> priorityOrder = List.of("High", "Medium", "Low");
@@ -257,5 +280,40 @@ public class TaskController {
 
         return ResponseEntity.ok(stats);
     }
-    
+
+    @GetMapping("/category-stats")
+    public ResponseEntity<Map<String, Map<String, Long>>> getTaskCountByCategory(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskService.getTasksByUser(user);
+
+        Map<String, Map<String, Long>> categoryStats = new HashMap<>();
+
+        for (Task task : tasks) {
+            String category = task.getCategory();
+            boolean isCompleted = task.isCompletionStatus();
+
+            // Initialize category stats if not present
+            categoryStats.putIfAbsent(category, new HashMap<>());
+            categoryStats.get(category).putIfAbsent("total", 0L);
+            categoryStats.get(category).putIfAbsent("completed", 0L);
+
+            // Increment total count
+            categoryStats.get(category).put("total", categoryStats.get(category).get("total") + 1);
+
+            // Increment completed count if task is completed
+            if (isCompleted) {
+                categoryStats.get(category).put("completed", categoryStats.get(category).get("completed") + 1);
+            }
+        }
+
+        return ResponseEntity.ok(categoryStats);
+    }
+
+
 }
