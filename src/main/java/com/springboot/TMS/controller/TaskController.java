@@ -12,10 +12,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
+import java.util.*;
+
+@CrossOrigin("")
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -155,5 +155,85 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/id/{taskName}")
+    public ResponseEntity<?> getTaskIdByName(@PathVariable String taskName,
+                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
 
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        Optional<Task> task = taskService.getTaskByName(taskName, user);
+
+        if (task.isPresent()) {
+            Task foundTask = task.get();
+            System.out.println("Found Task: " + foundTask);  // Debugging log
+            return ResponseEntity.ok(Collections.singletonMap("taskId", foundTask.getTaskId()));
+            // Ensure getTaskId() matches your entity field name
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+    }
+
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<?> getTaskById(@PathVariable int taskId,
+                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        Optional<Task> taskOptional = taskService.getTaskById(taskId);
+
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            if (!Objects.equals(task.getUser().getId(), user.getId())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only access your own tasks");
+            }
+            return ResponseEntity.ok(task);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+    }
+
+    // 1. Get tasks sorted by priority (High > Medium > Low)
+    @GetMapping("/sorted/priority")
+    public ResponseEntity<List<Task>> getTasksSortedByPriority(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskService.getTasksByUser(user);
+
+        // Sorting by priority
+        tasks.sort((task1, task2) -> comparePriority(task1.getPriority(), task2.getPriority()));
+
+        return ResponseEntity.ok(tasks);
+    }
+
+    // 2. Get tasks sorted by due date (Earliest first)
+    @GetMapping("/sorted/due-date")
+    public ResponseEntity<List<Task>> getTasksSortedByDueDate(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskService.getTasksByUser(user);
+
+        // Sorting by due date (earliest first)
+        tasks.sort(Comparator.comparing(Task::getDeadline));
+
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Helper method to compare priority
+    private int comparePriority(String priority1, String priority2) {
+        List<String> priorityOrder = List.of("High", "Medium", "Low");
+        return Integer.compare(priorityOrder.indexOf(priority1), priorityOrder.indexOf(priority2));
+    }
+
+    
 }

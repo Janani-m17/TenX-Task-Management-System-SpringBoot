@@ -18,7 +18,7 @@ public class JwtService {
     private final SecretKey secretKey = Keys.hmacShaKeyFor(Base64.getEncoder().encode(SECRET.getBytes(StandardCharsets.UTF_8)));
 
     // Store blacklisted tokens (thread-safe)
-    private static final Set<String> BLACKLISTED_TOKENS = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private static final Set<String> BLACKLISTED_TOKENS = new HashSet<>();
 
     /**
      * Generates a JWT token for a given email.

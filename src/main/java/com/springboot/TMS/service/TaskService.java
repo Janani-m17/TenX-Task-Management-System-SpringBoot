@@ -59,4 +59,8 @@ public class TaskService {
         LocalDate localDate = LocalDate.parse(date); // Convert String to LocalDate
         return taskRepository.findByUserAndDateOfCreation(user, localDate);
     }
+
+    public Optional<Task> getTaskByName(String name, User user) {
+        return taskRepository.findByNameAndUser(name, user);
+    }
 }
