@@ -121,6 +121,28 @@
 	flex-direction: column;
 }
 
+/* .sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100vh; /* Full height */
+	/* justify-content: space-between;
+  } */
+  
+  .menu-items {
+	margin-top: 30px;
+	flex-grow: 1; /* Allows menu to take available space */
+  }
+  
+  .logout-container {
+	margin-bottom: 20px;
+  }
+  
+  .sidebar-item.logout {
+	font-weight: bold;
+	cursor: pointer;
+  }
+  
+
 .sidebar-item {
 	display: flex;
 	align-items: center;

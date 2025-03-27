@@ -6,6 +6,7 @@ import SignUp from "./Pages/SignUp";
 import TenxPage from "./Pages/TenxPage";
 import ProfilePage from "./components/ProfilePage";
 import TasksPage from "./components/MyTasksPage";
+import NoPage from "./components/NoPage";
 
 
 
@@ -31,6 +32,9 @@ const App = () => {
 				<Route
 					path='/tasks'
 					element={<TasksPage />}></Route>
+				<Route
+					path='*'
+					element={<NoPage />}></Route>
       </Routes>
 		</BrowserRouter>
 	);
