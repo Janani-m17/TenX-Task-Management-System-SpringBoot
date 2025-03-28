@@ -6,10 +6,12 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { FaTasks } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import sidebarimg from "../assets/sidebar.svg"
+import { GiProgression } from "react-icons/gi";
 
 const menuItems = [
   { icon: <MdDashboard />, label: "Dashboard", path: "/tenxpage" },
   { icon: <FaTasks />, label: "My tasks", path: "/tasks" },
+  { icon: <GiProgression />, label: "View Progress", path: "/viewprogress" },
 ];
 
 function Sidebar({ selectedSection, onSectionSelect }) {

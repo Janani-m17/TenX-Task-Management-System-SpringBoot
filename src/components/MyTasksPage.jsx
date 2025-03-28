@@ -185,7 +185,9 @@ const TasksPage = () => {
 			<Sidebar selectedSection={selectedSection} onSectionSelect={setSelectedSection} />
 			<div className="tasks-content">
 				<div className="tasks-header">
-					<input type="text" placeholder="Search" className="search-input" />
+					<p className='quote-text'>
+						From To-Do to Done – <span className="highlight">TenX Gets You There!</span>
+					</p>
 					<div className="header-actions">
 						<button className="new-task-btn" onClick={() => setIsModalOpen(true)}>+ New task</button>
 						<div className="user-profile">

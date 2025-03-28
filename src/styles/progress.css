@@ -1,0 +1,89 @@
+.viewtasks-wrapper {
+	display: flex;
+}
+
+.viewtasks-container {
+	margin-top: 80px;
+	font-family: Arial, sans-serif;
+	width: 1200px;
+	margin-left: 50px;
+	background-color: white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	border-radius: 10px;
+}
+
+/* Task Header */
+.viewtasks-header {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+	background-color: #f8f8f8;
+	font-weight: bold;
+	color: #333;
+	padding: 12px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+/* Task Row */
+.viewtasks-row {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+	align-items: center;
+	padding: 12px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+/* Task Stage Styling */
+.task-stage-badge {
+	background-color: #e6f2ff;
+	color: #0066cc;
+	padding: 4px 8px;
+	border-radius: 12px;
+	font-size: 0.8em;
+}
+
+.task-priority-badge {
+	padding: 4px 8px;
+	border-radius: 12px;
+	font-size: 0.8em;
+}
+
+.task-priority-low {
+	background-color: #e6f2e6;
+	color: #2d7d2d;
+}
+
+.task-priority-medium {
+	background-color: #fff2e6;
+	color: #cc6600;
+}
+
+.task-priority-high {
+	background-color: #ffe6e6;
+	color: #cc0000;
+}
+
+.task-controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+	padding: 10px;
+	background: #f4f4f4;
+	border-radius: 8px;
+}
+
+.task-search {
+	padding: 8px;
+	width: 50%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.task-sort {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 300px;
+}

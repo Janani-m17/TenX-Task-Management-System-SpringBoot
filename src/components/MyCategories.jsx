@@ -1,73 +1,72 @@
-import React from "react";
 import "../styles/tenxpage.css";
+import React, { useState, useEffect } from "react";
 
-function MyCategories() {
-	const categories = [
-		{
-			icon: "💼",
-			label: "Work",
-			members: [
-				{ src: "/api/placeholder/30/30", alt: "Member 1" },
-				{ src: "/api/placeholder/30/30", alt: "Member 2" },
-			],
-		},
-		{
-			icon: "👨‍👩‍👧‍👦",
-			label: "Family",
-			members: [
-				{ src: "/api/placeholder/30/30", alt: "Family Member 1" },
-				{ src: "/api/placeholder/30/30", alt: "Family Member 2" },
-				{ src: "/api/placeholder/30/30", alt: "Family Member 3" },
-			],
-		},
-		{
-			icon: "💻",
-			label: "Freelance work 01",
-			members: [
-				{ src: "/api/placeholder/30/30", alt: "Freelance Member 1" },
-				{ src: "/api/placeholder/30/30", alt: "Freelance Member 2" },
-			],
-		},
-		{
-			icon: "📅",
-			label: "Conference planning",
-			members: [{ src: "/api/placeholder/30/30", alt: "Conference Member" }],
-		},
-	];
+const MyCategories = () => {
+	const [categories, setCategories] = useState([]);
+
+	// Default categories list
+	const defaultCategories = ["Work", "Personal", "Health", "Fitness", "Learning", "Others"];
+
+	// Fetch category stats from backend
+	const fetchCategories = async () => {
+		try {
+			const token = localStorage.getItem("token");
+			const response = await fetch("http://localhost:8080/tasks/category-stats", {
+				headers: { Authorization: token },
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to fetch category stats");
+			}
+
+			const data = await response.json();
+
+			// Convert response to an array and ensure all default categories exist
+			const formattedCategories = defaultCategories.map((category) => ({
+				name: category,
+				total: data[category]?.total || 0,
+				completed: data[category]?.completed || 0,
+			}));
+
+			setCategories(formattedCategories);
+		} catch (error) {
+			console.error("Error fetching categories:", error);
+			// If error, set all categories with zero count
+			setCategories(defaultCategories.map((name) => ({ name, total: 0, completed: 0 })));
+		}
+	};
+
+	// Fetch categories when component mounts
+	useEffect(() => {
+		fetchCategories();
+	}, []);
 
 	return (
-		<div className='my-categories white-bg'>
-			<div className='section-header'>
-				<h3>My categories</h3>
-				<span>...</span>
+		<div className="task-tracker-container white-bg">
+			<div className="section-header">
+				<h3>Categories</h3>
 			</div>
-			<div className='categories-list'>
-				{categories.map((category, index) => (
-					<div
-						key={index}
-						className='category-item'>
-						<div className='category-info'>
-							<span className='category-icon'>{category.icon}</span>
-							<span className='category-label'>{category.label}</span>
-						</div>
-						<div className='category-members'>
-							{category.members.map((member, memIndex) => (
-								<img
-									key={memIndex}
-									src={member.src}
-									alt={member.alt}
-									className='member-avatar'
-								/>
-							))}
+
+			{categories.length === 0 ? (
+				<p>No categories found</p>
+			) : (
+				categories.map((category) => (
+					<div key={category.name} className="category">
+						<div className="category-details">
+							<div className="category-name">{category.name}</div>
+							<div className="category-stats">
+								<div className="total-text">Total: {category.total}</div>
+								<div className="completed-text">Completed: {category.completed}</div>
+								<div className="progress-text">
+									In Progress: {category.total - category.completed}
+								</div>
+							</div>
 						</div>
 					</div>
-				))}
-				<div className='add-category'>
-					<span>+ Add more</span>
-				</div>
-			</div>
+				))
+			)}
 		</div>
 	);
-}
+};
 
 export default MyCategories;

@@ -19,12 +19,35 @@
 	gap: 10px;
 }
 
-.search-input {
-	flex-grow: 1;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	background-color: white;
+.quote-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary-700);
+    text-align: center;
+    background-color: white;
+    padding: 10px 20px;
+    width: 1000px;
+    max-width: 80%;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.quote-text:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.highlight {
+    color: var(--color-primary-900);
+    background: linear-gradient(90deg, #6a5acd, #8a75ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }
 
 .header-actions {

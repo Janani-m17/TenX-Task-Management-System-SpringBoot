@@ -23,11 +23,9 @@ const TenxPage = () => {
 			/>
 			<div className='main-content'>
 				<div className='top-bar'>
-					<input
-						type='text'
-						placeholder='Search'
-						className='search-input'
-					/>
+				    <p className='quote-text'>
+						From To-Do to Done – <span className="highlight">TenX Gets You There!</span>
+					</p>
 					<div className='top-bar-actions'>
 						<button
 							className='new-task-btn'
