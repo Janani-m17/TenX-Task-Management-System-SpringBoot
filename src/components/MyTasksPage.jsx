@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import TaskFormModal from "./TaskFormModal";
 import { MdOutlineDoneOutline } from "react-icons/md";
 import EditTaskModal from "./EditTaskModal";
+import Head from "./Head";
 
 const TasksPage = () => {
 	const [selectedSection, setSelectedSection] = useState("My tasks");
@@ -185,7 +186,7 @@ const TasksPage = () => {
 			<Sidebar selectedSection={selectedSection} onSectionSelect={setSelectedSection} />
 			<div className="cat-container"> 
 			<div className="tasks-content">
-				<div className="tasks-header">
+				{/* <div className="tasks-header">
 					<p className='quote-text'>
 						From To-Do to Done – <span className="highlight">TenX Gets You There!</span>
 					</p>
@@ -195,7 +196,8 @@ const TasksPage = () => {
 							<span onClick={() => navigate("/profile")} style={{ cursor: "pointer" }}>👤</span>
 						</div>
 					</div>
-				</div>
+				</div> */}
+				<Head />
 				<div className="tasks-list-container">
 					<TaskList title="Today" tasks={tasks.today} toggleComplete={toggleComplete} completedTasks={completedTasks} editTask={editTask} deleteTask={deleteTask} />
 					<TaskList title="Tomorrow" tasks={tasks.tomorrow} toggleComplete={toggleComplete} completedTasks={completedTasks} editTask={editTask} deleteTask={deleteTask} />

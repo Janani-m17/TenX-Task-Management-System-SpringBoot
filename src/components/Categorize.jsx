@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/progress.css";
 import Sidebar from "../components/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
+import Head from "./Head.jsx";
 
 const TaskManagement = () => {
   const [selectedSection, setSelectedSection] = useState("Categorize");
