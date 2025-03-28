@@ -45,7 +45,7 @@ const TaskManagement = () => {
   return (
     <div className='viewtasks-wrapper'>
       <Sidebar selectedSection={selectedSection} onSectionSelect={setSelectedSection} />
-      <div>
+      <div className="cat-container">
       <div className="tasks-header">
 					<p className='quote-text1'>
 						From To-Do to Done – <span className="highlight">TenX Gets You There!</span>

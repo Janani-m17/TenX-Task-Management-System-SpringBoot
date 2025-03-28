@@ -2,6 +2,13 @@
 	display: flex;
 }
 
+.cat-container {
+    flex: 1; /* Takes remaining space */
+    overflow-y: auto; /* Enables vertical scrolling */
+    height: 100vh; /* Ensures it fills full height */
+    padding: 10px;
+  }
+
 .viewtasks-container {
 	margin-top: 20px;
 	font-family: Arial, sans-serif;

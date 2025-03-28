@@ -21,6 +21,7 @@ const TenxPage = () => {
 				selectedSection={selectedSection}
 				onSectionSelect={setSelectedSection}
 			/>
+			<div className="cat-container">
 			<div className='main-content'>
 				<div className='top-bar'>
 				    <p className='quote-text'>
@@ -48,6 +49,7 @@ const TenxPage = () => {
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 			/>
+			</div>
 		</div>
 	);
 };

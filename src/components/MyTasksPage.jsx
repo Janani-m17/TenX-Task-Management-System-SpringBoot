@@ -183,6 +183,7 @@ const TasksPage = () => {
 	return (
 		<div className="tasks-page">
 			<Sidebar selectedSection={selectedSection} onSectionSelect={setSelectedSection} />
+			<div className="cat-container"> 
 			<div className="tasks-content">
 				<div className="tasks-header">
 					<p className='quote-text'>
@@ -215,6 +216,7 @@ const TasksPage = () => {
 					fetchTasks={fetchTasks} // To refresh after editing
 				/>
 			)}
+		</div>
 		</div>
 	);
 };
