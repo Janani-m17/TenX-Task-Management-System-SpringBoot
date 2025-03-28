@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IoClose, IoCalendar, IoPricetag } from "react-icons/io5";
 import "../styles/modal.css";
+import { checkTokenExpiration } from "../Auth";
 
 const EditTaskModal = ({
 	isOpen,
@@ -71,6 +72,7 @@ const EditTaskModal = ({
 		}
 
 		try {
+			checkTokenExpiration();
 			const response = await fetch(
 				`http://localhost:8080/tasks/update/${task.taskId}`,
 				{

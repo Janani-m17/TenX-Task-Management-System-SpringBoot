@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/tenxpage.css";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
+import { checkTokenExpiration } from "../Auth";
 
 Chart.register(...registerables);
 
@@ -19,6 +20,7 @@ function MyTracking() {
 	useEffect(() => {
 		const fetchTasks = async () => {
 			try {
+				checkTokenExpiration();
 				const response = await fetch("http://localhost:8080/tasks/last7days", {
 					method: "GET",
 					credentials: "include",

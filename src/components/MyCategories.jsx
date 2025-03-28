@@ -1,3 +1,4 @@
+import { checkTokenExpiration } from "../Auth";
 import "../styles/tenxpage.css";
 import React, { useState, useEffect } from "react";
 
@@ -11,6 +12,7 @@ const MyCategories = () => {
 	const fetchCategories = async () => {
 		try {
 			const token = localStorage.getItem("token");
+			checkTokenExpiration();
 			const response = await fetch("http://localhost:8080/tasks/category-stats", {
 				headers: { Authorization: token },
 			});

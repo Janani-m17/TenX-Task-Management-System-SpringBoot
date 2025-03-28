@@ -3,9 +3,12 @@ import "../styles/progress.css";
 import Sidebar from "../components/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import Head from "./Head.jsx";
+import TaskFormModal from "./TaskFormModal.jsx";
+import { checkTokenExpiration } from "../Auth.js";
 
 const TaskManagement = () => {
   const [selectedSection, setSelectedSection] = useState("Categorize");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState("");
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +19,7 @@ const TaskManagement = () => {
 
     const fetchTasks = async () => {
         try {
+            checkTokenExpiration();
           let url = "http://localhost:8080/tasks/sorted/priority";
           if (sortOption === "priority") url = "http://localhost:8080/tasks/sorted/priority";
           else if (sortOption === "dueDate") url = "http://localhost:8080/tasks/sorted/due-date";
@@ -101,6 +105,10 @@ const TaskManagement = () => {
         )}
       </div>
     </div>
+    <TaskFormModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+			/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IoClose, IoCalendar, IoPricetag } from "react-icons/io5";
 import "../styles/modal.css";
+import { checkTokenExpiration } from "../Auth";
 
 const TaskFormModal = ({ isOpen, onClose }) => {
 	const [taskName, setTaskName] = useState("");
@@ -49,6 +50,8 @@ const TaskFormModal = ({ isOpen, onClose }) => {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
+
+		checkTokenExpiration();
 	
 		const token = localStorage.getItem("token");
 		if (!token) {

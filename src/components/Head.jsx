@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import TaskFormModal from "./TaskFormModal";
+import { useNavigate } from "react-router-dom";
 
 const Head = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
+
     return (
         <div className="tasks-header">
 			<p className='quote-text'>
@@ -11,6 +16,10 @@ const Head = () => {
 			<div className="user-profile">
 				<span onClick={() => navigate("/profile")} style={{ cursor: "pointer" }}>👤</span>
 			</div>
+            <TaskFormModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+			/>
 		</div>
 		</div>
     );

@@ -4,6 +4,7 @@ import Illustration from '../assets/login-illustration.svg';
 import Logo from '../assets/tenx logo.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import { checkTokenExpiration } from '../Auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +16,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    checkTokenExpiration();
 
     const loginData = { email, password };
 

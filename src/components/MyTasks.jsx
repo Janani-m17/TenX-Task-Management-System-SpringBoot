@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/tenxpage.css";
 import { CheckCircle } from "lucide-react";
 import { VscTasklist } from "react-icons/vsc";
+import { checkTokenExpiration } from "../Auth";
 
 
 const MyTasks = ({ selectedDate }) => {
@@ -31,6 +32,7 @@ const MyTasks = ({ selectedDate }) => {
 
     const fetchTasks = async (date) => {
         try {
+            checkTokenExpiration();
             const response = await fetch(`http://localhost:8080/tasks/date/${date}`, {
                 method: "GET",
                 credentials: "include",
@@ -53,6 +55,7 @@ const MyTasks = ({ selectedDate }) => {
 
     const getTaskIdByName = async (taskName) => {
         try {
+            checkTokenExpiration();
             const response = await fetch(`http://localhost:8080/tasks/id/${taskName}`, {
                 method: "GET",
                 credentials: "include",
@@ -81,6 +84,8 @@ const MyTasks = ({ selectedDate }) => {
                     return;
                 }
             }
+
+            checkTokenExpiration();
 
             // Fetch full task details
             const taskResponse = await fetch(`http://localhost:8080/tasks/${taskId}`, {

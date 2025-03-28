@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Edit, Save, User, CheckCircle, TrendingUp, Trophy } from "lucide-react";
 import SideBar from "../components/Sidebar";
 import "../styles/profile.css";
-import profileimg from "../assets/profile.svg"
+import { checkTokenExpiration } from "../Auth";
 
 const ProfilePage = () => {
   // User details state
@@ -28,6 +28,7 @@ const ProfilePage = () => {
   // Fetch user details on mount
   useEffect(() => {
     const fetchUserInfo = async () => {
+      checkTokenExpiration();
       try {
         const response = await fetch("http://localhost:8080/auth/user-info", {
           method: "GET",
@@ -53,6 +54,7 @@ const ProfilePage = () => {
     };
 
     const fetchTaskStats = async () => {
+      checkTokenExpiration();
       try {
         const response = await fetch("http://localhost:8080/tasks/stats", {
           method: "GET",
@@ -101,6 +103,7 @@ const ProfilePage = () => {
 
   // Save user details to backend
   const saveUserDetails = async () => {
+    checkTokenExpiration();
     try {
       const response = await fetch("http://localhost:8080/auth/updateUser", {
         method: "PUT",

@@ -7,6 +7,7 @@ import { FaTasks } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import sidebarimg from "../assets/sidebar.svg"
 import { FaChartPie } from "react-icons/fa";
+import { checkTokenExpiration } from "../Auth";
 
 const menuItems = [
   { icon: <MdDashboard />, label: "Dashboard", path: "/tenxpage" },
@@ -19,6 +20,7 @@ function Sidebar({ selectedSection, onSectionSelect }) {
 
   const handleNavigation = async (label, path) => {
     if (label === "Log out") {
+      checkTokenExpiration();
       try {
         const token = localStorage.getItem("token");
 

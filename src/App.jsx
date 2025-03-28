@@ -8,7 +8,7 @@ import ProfilePage from "./components/ProfilePage";
 import TasksPage from "./components/MyTasksPage";
 import NoPage from "./components/NoPage";
 import TaskManagement from "./components/Categorize";
-
+import ProtectedRoute from "./ProtectedRoute";
 
 
 const App = () => {
@@ -24,6 +24,8 @@ const App = () => {
 				<Route
 					path='/signup'
 					element={<SignUp />}></Route>
+
+				<Route element={<ProtectedRoute />}>
 				<Route
 					path='/tenxpage'
 					element={<TenxPage />}></Route>
@@ -36,6 +38,8 @@ const App = () => {
 				<Route
 					path='/categorize'
 					element={<TaskManagement />}></Route>
+				</Route>
+				
 				<Route
 					path='*'
 					element={<NoPage />}></Route>

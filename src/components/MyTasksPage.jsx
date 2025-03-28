@@ -7,6 +7,7 @@ import TaskFormModal from "./TaskFormModal";
 import { MdOutlineDoneOutline } from "react-icons/md";
 import EditTaskModal from "./EditTaskModal";
 import Head from "./Head";
+import { checkTokenExpiration } from "../Auth";
 
 const TasksPage = () => {
 	const [selectedSection, setSelectedSection] = useState("My tasks");
@@ -24,6 +25,7 @@ const TasksPage = () => {
 
 	const fetchTasks = async () => {
 		try {
+			checkTokenExpiration();
 			const response = await fetch("http://localhost:8080/tasks/my", {
 				method: "GET",
 				credentials: "include",
@@ -78,6 +80,7 @@ const TasksPage = () => {
 
 	const getTaskIdByName = async (taskName) => {
 		try {
+			checkTokenExpiration();
 			const response = await fetch(`http://localhost:8080/tasks/id/${taskName}`, {
 				method: "GET",
 				credentials: "include",
@@ -107,6 +110,8 @@ const TasksPage = () => {
 					return;
 				}
 			}
+
+			checkTokenExpiration();
 	
 			// Fetch the full task details first
 			const taskResponse = await fetch(`http://localhost:8080/tasks/${taskId}`, {
@@ -159,6 +164,8 @@ const TasksPage = () => {
 	const deleteTask = async (taskId) => {
 		const isConfirmed = window.confirm("Are you sure you want to delete this task?");
 		if (!isConfirmed) return; // If user cancels, do nothing
+
+		checkTokenExpiration();
 	
 		try {
 			const response = await fetch(`http://localhost:8080/tasks/delete/${taskId}`, {
