@@ -26,20 +26,12 @@ const TenxPage = () => {
 				    <p className='quote-text'>
 						From To-Do to Done – <span className="highlight">TenX Gets You There!</span>
 					</p>
-					<div className='top-bar-actions'>
-						<button
-							className='new-task-btn'
-							onClick={() => setIsModalOpen(true)}>
-							+ New task
-						</button>
-						<div className='notification-icons'>
-							<span
-								onClick={() => navigate("/profile")}
-								style={{ cursor: "pointer" }}>
-								👤
-							</span>
+					<div className="header-actions">
+						<button className="new-task-btn" onClick={() => setIsModalOpen(true)}>+ New task</button>
+						<div className="user-profile">
+							<span onClick={() => navigate("/profile")} style={{ cursor: "pointer" }}>👤</span>
 						</div>
-					</div>
+				</div>
 				</div>
 				<div className='dashboard-grid'>
 					<div className='dashboard-left'>

@@ -7,7 +7,7 @@ import TenxPage from "./Pages/TenxPage";
 import ProfilePage from "./components/ProfilePage";
 import TasksPage from "./components/MyTasksPage";
 import NoPage from "./components/NoPage";
-import TaskManagement from "./components/ViewProgress";
+import TaskManagement from "./components/Categorize";
 
 
 
@@ -34,7 +34,7 @@ const App = () => {
 					path='/tasks'
 					element={<TasksPage />}></Route>
 				<Route
-					path='/viewprogress'
+					path='/categorize'
 					element={<TaskManagement />}></Route>
 				<Route
 					path='*'
