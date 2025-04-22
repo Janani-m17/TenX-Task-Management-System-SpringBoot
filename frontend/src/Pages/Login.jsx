@@ -4,6 +4,7 @@ import Illustration from "../assets/login-illustration.svg";
 import Logo from "../assets/Tenx_logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import { checkTokenExpiration } from "../Auth";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -15,6 +16,8 @@ const Login = () => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		setError("");
+
+		checkTokenExpiration();
 
 		const loginData = { email, password };
 
@@ -33,9 +36,9 @@ const Login = () => {
 			}
 
 			const data = await response.json();
-			localStorage.setItem("token", data.token); // ✅ Save JWT token
+			localStorage.setItem("token", data.token);
 			alert("Login successful!");
-			navigate("/dashboard"); // ✅ Redirect to Dashboard
+			navigate("/tenxpage");
 		} catch (error) {
 			console.error("Login error:", error);
 			setError("Invalid email or password");

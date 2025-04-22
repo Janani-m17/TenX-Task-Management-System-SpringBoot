@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import Home from "./Pages/Home";
-import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
 import TenxPage from "./Pages/TenxPage";
 import ProfilePage from "./components/ProfilePage";
 import TasksPage from "./components/MyTasksPage";
+import NoPage from "./components/NoPage";
+import TaskManagement from "./components/Categorize";
+import ProtectedRoute from "./ProtectedRoutes";
 
 const App = () => {
 	return (
@@ -15,20 +18,30 @@ const App = () => {
 					path='/'
 					element={<Home />}></Route>
 				<Route
-					path='/signup'
-					element={<SignUp />}></Route>
-				<Route
 					path='/login'
 					element={<Login />}></Route>
 				<Route
-					path='/tenxpage'
-					element={<TenxPage />}></Route>
+					path='/signup'
+					element={<SignUp />}></Route>
+
+				<Route element={<ProtectedRoute />}>
+					<Route
+						path='/tenxpage'
+						element={<TenxPage />}></Route>
+					<Route
+						path='/profile'
+						element={<ProfilePage />}></Route>
+					<Route
+						path='/tasks'
+						element={<TasksPage />}></Route>
+					<Route
+						path='/categorize'
+						element={<TaskManagement />}></Route>
+				</Route>
+
 				<Route
-					path='/profile'
-					element={<ProfilePage />}></Route>
-				<Route
-					path='/tasks'
-					element={<TasksPage />}></Route>
+					path='*'
+					element={<NoPage />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);
